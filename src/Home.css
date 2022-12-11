@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* copy first for using tailwindcss */
+
+body {
+  /* background-image: url(./img/nahida.jpg);
+  background-size: 100%; */
+}
