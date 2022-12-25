@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 
 function GetCharacter() {
   const [charactersList, setCharactersList] = useState([]);
 
-  // function to get all characters
-  const getCharacters = () => {
+  useEffect(() => {
+      // function to get all characters
     axios({
       method: "GET",
       url: `https://genshin-db-api.vercel.app/api/characters`,
@@ -30,10 +30,6 @@ function GetCharacter() {
       .catch(function (err) {
         console.log(err);
       });
-  };
-
-  useEffect(() => {
-    getCharacters();
   }, []);
 
   return (charactersList);

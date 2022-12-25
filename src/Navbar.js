@@ -4,6 +4,7 @@ function Navbar() {
       {[
         ["Home", "/"],
         ["Character", "/character"],
+        ["Weapon", "/weapon"],
         ["Monster", "/monster"],
       ].map(([title, url]) => (
         <a
