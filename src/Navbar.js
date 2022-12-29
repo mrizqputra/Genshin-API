@@ -3,9 +3,9 @@ function Navbar() {
     <nav className="flex sm:justify-center space-x-4">
       {[
         ["Home", "/"],
-        ["Character", "/character"],
-        ["Weapon", "/weapon"],
-        ["Monster", "/monster"],
+        ["Characters", "/character"],
+        ["Weapons", "/weapons"],
+        ["Artifacts", "/artifacts"],
       ].map(([title, url]) => (
         <a
           href={url}

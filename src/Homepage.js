@@ -1,5 +1,3 @@
-// import { getValue } from "@testing-library/user-event/dist/utils";
-// import GetCharacter from "./API/GetCharacter";
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -234,14 +232,14 @@ function HomePage() {
             </div>
             {charactersList.map((value) => {
               return (
-                <div className="columns-1 text-center">
+                // <div className="columns-1 text-center">
                   <button
                     onClick={() => getCharacterDetail(value)}
                     className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900"
                   >
                     {value}
                   </button>
-                </div>
+                // </div>
               );
             })}
           </div>

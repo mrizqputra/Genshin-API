@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
 import Navbar from './Navbar';
 import Homepage from './Homepage';
-// import Character from './Character';
-// import reportWebVitals from './reportWebVitals';
+import WeaponsPage from './Weapon';
+import ArtifactsPage from './Artifact';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -23,8 +22,16 @@ const router = createBrowserRouter([
         element: <><Homepage/></>  
       },
       {
-        path: "/character",
+        path: "/characters",
         // element: <><Character/></>  
+      },
+      {
+        path: "/weapons",
+        element: <><WeaponsPage/></>  
+      },
+      {
+        path: "/artifacts",
+        element: <><ArtifactsPage/></>  
       },
     ],
   }]
