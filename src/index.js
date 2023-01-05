@@ -5,6 +5,8 @@ import Navbar from './Navbar';
 import Homepage from './Homepage';
 import WeaponsPage from './Weapon';
 import ArtifactsPage from './Artifact';
+import CharactersPage from './Character';
+import Footer from './component/Footer';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -13,7 +15,7 @@ const router = createBrowserRouter([
     element: <>
     <Navbar />
     <Outlet />
-    {/* <Footer /> */}
+    <Footer />
     </>,
     errorElement: <p>Page Not Found</p>,
     children: [
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/characters",
-        // element: <><Character/></>  
+        element: <><CharactersPage/></>  
       },
       {
         path: "/weapons",
