@@ -6,6 +6,7 @@ function Navbar() {
         ["Characters", "/characters"],
         ["Weapons", "/weapons"],
         ["Artifacts", "/artifacts"],
+        ["Materials", "/materials"],
       ].map(([title, url]) => (
         <a
           href={url}
