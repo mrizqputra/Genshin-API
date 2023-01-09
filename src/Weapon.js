@@ -221,6 +221,141 @@ function WeaponsPage() {
   };
 
   const WrapWeaponDetail = (WeaponDetail) => {
+    const rarityDetail = () => {
+      if (WeaponDetail.rarity <= 2) {
+        return null;
+      }
+      return (
+        <>
+          <div className="mx-auto bg-white shadow">
+            <div className="mb-6 border-b border-slate-200 pb-2 text-base font-semibold">
+              Refine Status Detail
+            </div>
+            <input
+              id="published"
+              class="peer/refine_1 form-radio mr-2 mb-0.5 ml-4 border-slate-300 text-sky-400 focus:ring-sky-300"
+              type="radio"
+              name="status"
+            />
+            <label
+              for="published"
+              className="peer-checked/published:text-sky-500 font-medium"
+            >
+              Refine 1
+            </label>
+            <input
+              id="published"
+              class="peer/refine_2 form-radio mr-2 mb-0.5 ml-4 border-slate-300 text-sky-400 focus:ring-sky-300"
+              type="radio"
+              name="status"
+            />
+            <label
+              for="published"
+              className="peer-checked/published:text-sky-500 font-medium"
+            >
+              Refine 2
+            </label>
+            <input
+              id="published"
+              class="peer/refine_3 form-radio mr-2 mb-0.5 ml-4 border-slate-300 text-sky-400 focus:ring-sky-300"
+              type="radio"
+              name="status"
+            />
+            <label
+              for="published"
+              className="peer-checked/published:text-sky-500 font-medium"
+            >
+              Refine 3
+            </label>
+            <input
+              id="published"
+              class="peer/refine_4 form-radio mr-2 mb-0.5 ml-4 border-slate-300 text-sky-400 focus:ring-sky-300"
+              type="radio"
+              name="status"
+            />
+            <label
+              for="published"
+              className="peer-checked/published:text-sky-500 font-medium"
+            >
+              Refine 4
+            </label>
+            <input
+              id="published"
+              class="peer/refine_5 form-radio mr-2 mb-0.5 ml-4 border-slate-300 text-sky-400 focus:ring-sky-300"
+              type="radio"
+              name="status"
+            />
+            <label
+              for="published"
+              className="peer-checked/published:text-sky-500 font-medium"
+            >
+              Refine 5
+            </label>
+            <div className="hidden peer-checked/refine_1:block text-xl">
+              Effect on Refine 1:{" "}
+              {WeaponDetail.effect
+                .split("{0}")
+                .join(WeaponDetail.r1[0])
+                .split("{1}")
+                .join(WeaponDetail.r1[1])
+                .split("{2}")
+                .join(WeaponDetail.r1[2])
+                .split("{3}")
+                .join(WeaponDetail.r1[3])}
+            </div>
+            <div className="hidden peer-checked/refine_2:block text-xl">
+              Effect on Refine 2:{" "}
+              {WeaponDetail.effect
+                .split("{0}")
+                .join(WeaponDetail.r2[0])
+                .split("{1}")
+                .join(WeaponDetail.r2[1])
+                .split("{2}")
+                .join(WeaponDetail.r2[2])
+                .split("{3}")
+                .join(WeaponDetail.r2[3])}
+            </div>
+            <div className="hidden peer-checked/refine_3:block text-xl">
+              Effect on Refine 3:{" "}
+              {WeaponDetail.effect
+                .split("{0}")
+                .join(WeaponDetail.r3[0])
+                .split("{1}")
+                .join(WeaponDetail.r3[1])
+                .split("{2}")
+                .join(WeaponDetail.r3[2])
+                .split("{3}")
+                .join(WeaponDetail.r3[3])}
+            </div>
+            <div className="hidden peer-checked/refine_4:block text-xl">
+              Effect on Refine 4:{" "}
+              {WeaponDetail.effect
+                .split("{0}")
+                .join(WeaponDetail.r4[0])
+                .split("{1}")
+                .join(WeaponDetail.r4[1])
+                .split("{2}")
+                .join(WeaponDetail.r4[2])
+                .split("{3}")
+                .join(WeaponDetail.r4[3])}
+            </div>
+            <div className="hidden peer-checked/refine_5:block text-xl">
+              Effect on Refine 5:{" "}
+              {WeaponDetail.effect
+                .split("{0}")
+                .join(WeaponDetail.r5[0])
+                .split("{1}")
+                .join(WeaponDetail.r5[1])
+                .split("{2}")
+                .join(WeaponDetail.r5[2])
+                .split("{3}")
+                .join(WeaponDetail.r5[3])}
+            </div>
+          </div>
+        </>
+      );
+    };
+
     if (WeaponDetail === null) {
       return null;
     }
@@ -253,7 +388,8 @@ function WeaponsPage() {
         </div>
         <div className="text-xl">Stat: {WeaponDetail.baseatk}</div>
         <div className="text-xl">Subtat: {WeaponDetail.substat}</div>
-        <div className="mx-auto bg-white shadow">
+        {rarityDetail()}
+        {/* <div className="mx-auto bg-white shadow">
           <div className="mb-6 border-b border-slate-200 pb-2 text-base font-semibold">Refine Status Detail</div>
           <input
             id="published"
@@ -360,7 +496,7 @@ function WeaponsPage() {
             .split("{3}")
             .join(WeaponDetail.r5[3])}
         </div>
-        </div>
+        </div> */}
         <div className="text-xl">Story: {WeaponDetail.story}</div>
         <div className="text-xl">Type: {WeaponDetail.weapontype}</div>
         <div className="text-xl">Release version: {WeaponDetail.version}</div>

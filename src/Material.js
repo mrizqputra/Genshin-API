@@ -226,13 +226,13 @@ function MaterialsPage() {
     }
     return (
       <div className="container ml-5">
-        <img
+        {/* <img
           className="chrimg"
           alt="chrimg"
           src={MaterialDetail.images.icon}
-        ></img>
+        ></img> */}
         <div className="text-xl">Name: {MaterialDetail.name}</div>
-        <div className="text-xl">
+        {/* <div className="text-xl">
           <div className="flex flex-wrap">
             Rarity: {MaterialDetail.rarity}
             <svg
@@ -363,7 +363,7 @@ function MaterialsPage() {
         </div>
         <div className="text-xl">Story: {MaterialDetail.story}</div>
         <div className="text-xl">Type: {MaterialDetail.Materialtype}</div>
-        <div className="text-xl">Release version: {MaterialDetail.version}</div>
+        <div className="text-xl">Release version: {MaterialDetail.version}</div> */}
       </div>
     );
   };
