@@ -1,19 +1,18 @@
 import { React, useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Sticker3 from "./img/sticker_3.png";
 // import TalentSchedule from "./API/TalentSchedule";
 
 function HomePage() {
-  const [talentSchedule, setTalentSchedule] = useState([]);
-  const [weaponMaterialSchedule, setWeaponMaterialSchedule] = useState([]);
+  const [materialSchedule, setMaterialSchedule] = useState([]);
   const [domainSchedule, setDomainSchedule] = useState([]);
-  const [talent1Detail, setTalent1Detail] = useState(null);
-  const [talent2Detail, setTalent2Detail] = useState(null);
-  const [talent3Detail, setTalent3Detail] = useState(null);
-  const [weaponMaterial1Detail, setWeaponMaterial1Detail] = useState(null);
-  const [weaponMaterial2Detail, setWeaponMaterial2Detail] = useState(null);
-  const [weaponMaterial3Detail, setWeaponMaterial3Detail] = useState(null);
+
+  console.log(materialSchedule);
+  console.log(domainSchedule);
+
+  const genshindb = require("genshin-db");
+  // console.log(genshindb.characters('names', {matchNames: true}));
+  // console.log(genshindb.materials('sunday', {matchCategories: true}));
 
   const date = [
     "sunday",
@@ -27,342 +26,16 @@ function HomePage() {
 
   const getToday = date[new Date().getDay()];
 
-  const getTodayFarmMaterial = () => {
-    axios
-      .all([
-        axios({
-          method: "GET",
-          url: `https://genshin-db-api.vercel.app/api/weaponmaterialtypes`,
-          params: {
-            query: getToday,
-            // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-            // matchNames: false, // Allows the matching of names.
-            // matchAltNames: true, // Allows the matching of alternate or custom names.
-            // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-            matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-            // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-            // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-            resultLanguage: "English", // Output language that you want your results to be in.
-          },
-          headers: {},
-        }),
-        axios({
-          method: "GET",
-          url: `https://genshin-db-api.vercel.app/api/talentmaterialtypes`,
-          params: {
-            query: getToday,
-            // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-            // matchNames: false, // Allows the matching of names.
-            // matchAltNames: true, // Allows the matching of alternate or custom names.
-            // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-            matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-            // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-            // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-            resultLanguage: "English", // Output language that you want your results to be in.
-          },
-          headers: {},
-        }),
-        axios({
-          method: "GET",
-          url: `https://genshin-db-api.vercel.app/api/domains`,
-          params: {
-            query: getToday,
-            // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-            // matchNames: false, // Allows the matching of names.
-            // matchAltNames: true, // Allows the matching of alternate or custom names.
-            // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-            matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-            // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-            // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-            resultLanguage: "English", // Output language that you want your results to be in.
-          },
-          headers: {},
-        }),
-      ])
-      .then(
-        axios.spread((response1, response2, response3) => {
-          setWeaponMaterialSchedule(response1.data);
-          setTalentSchedule(response2.data);
-          setDomainSchedule(response3.data);
-          axios.all([
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response2.data[0],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setTalent1Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response2.data[1],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setTalent2Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response2.data[2],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setTalent3Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-          ]);
-          axios.all([
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response1.data[0],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setWeaponMaterial1Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response1.data[1],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setWeaponMaterial2Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-            axios({
-              method: "GET",
-              url: `https://genshin-db-api.vercel.app/api/materials`,
-              params: {
-                query: response1.data[2],
-                // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-                // matchNames: false, // Allows the matching of names.
-                matchAltNames: true, // Allows the matching of alternate or custom names.
-                matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-                // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-                // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-                // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-                resultLanguage: "English", // Output language that you want your results to be in.
-              },
-              headers: {},
-            })
-              .then(function (response) {
-                // console.log(response);
-                setWeaponMaterial3Detail(response.data);
-              })
-              .catch(function (err) {
-                console.log(err);
-              }),
-          ]);
-        })
-      )
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // const getMaterialDetail =  () => {
-  //   // for (let i = 0; i < talentSchedule.length; i++)
-  //     axios({
-  //     method: "GET",
-  //     url: `https://genshin-db-api.vercel.app/api/materials`,
-  //     params: {
-  //       query: talentSchedule[0],
-  //       // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-  //       // matchNames: false, // Allows the matching of names.
-  //       matchAltNames: true, // Allows the matching of alternate or custom names.
-  //       matchAliases: true, // Allows the matching of aliases. These are searchable fields that returns the datLink to="#"object the query matched in.
-  //       // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-  //       // verboseCategories: false, // Used if Link to="#"category is matched. If true, then replaces each string name in the array with the datLink to="#"object instead.
-  //       // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-  //       resultLanguage: "English", // Output language that you want your results to be in.
-  //     },
-  //     headers: {},
-  //   })
-  //     .then(function (response) {
-  //       // console.log(response);
-  //       setMaterialDetail(response.data);
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
-
   useEffect(() => {
-    getTodayFarmMaterial();
+    setMaterialSchedule(
+      genshindb.materials(getToday, { matchCategories: true })
+    );
+    setDomainSchedule(genshindb.domains(getToday, { matchCategories: true }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(talentSchedule);
-  console.log(weaponMaterialSchedule);
-  console.log(domainSchedule);
-  console.log(talent1Detail);
-  console.log(talent2Detail);
-  console.log(talent3Detail);
-  console.log(weaponMaterial1Detail);
-  console.log(weaponMaterial2Detail);
-  console.log(weaponMaterial3Detail);
-
-  const wrapImageTalent1 = (talent1Detail) => {
-    if (talent1Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={talent1Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
-
-  const wrapImageTalent2 = (talent2Detail) => {
-    if (talent2Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={talent2Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
-
-  const wrapImageTalent3 = (talent3Detail) => {
-    if (talent3Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={talent3Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
-
-  const wrapImageWM1 = (weaponMaterial1Detail) => {
-    if (weaponMaterial1Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={weaponMaterial1Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
-
-  const wrapImageWM2 = (weaponMaterial2Detail) => {
-    if (weaponMaterial2Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={weaponMaterial2Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
-
-  const wrapImageWM3 = (weaponMaterial3Detail) => {
-    if (weaponMaterial3Detail !== null) {
-      return (
-        <>
-          <img
-            className="w-20 h-20"
-            alt="hero"
-            src={weaponMaterial3Detail.images.fandom}
-          />
-        </>
-      );
-    }
-    return null;
-  };
+  console.log(genshindb.material(materialSchedule[0]));
+  // console.log(genshindb.materials(materialSchedule[0], {matchCategories:true, verboseCategories:true}).filter(materialtype => materialtype === "Weapon Ascension Material"));
 
   return (
     <>
@@ -418,13 +91,7 @@ function HomePage() {
                 Talent Material Today
               </h2>
               <p class="leading-relaxed text-base mb-4">
-                <div className="inline-flex">
-                  {wrapImageTalent1(talent1Detail)}
-                  {wrapImageTalent2(talent2Detail)}
-                  {wrapImageTalent3(talent3Detail)}
-                </div>
-                <br />
-                {talentSchedule.join(", ")}
+                {/* {genshindb.materials(materialSchedule, {matchCategories:true, verboseCategories:true}).filter(materialtype => materialtype === "Weapon Ascension Material")} */}
               </p>
               <Link to="#" class="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -445,15 +112,9 @@ function HomePage() {
               <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">
                 Weapon Material Today
               </h2>
-              <p class="leading-relaxed text-base mb-4">
-                {domainSchedule[16]}
-                <br />
-                {domainSchedule[20]}
-                <br />
-                {domainSchedule[24]}
-                <br />
-                {domainSchedule[28]}
-              </p>
+              <div className="leading-relaxed text-base mb-4">
+                <p>{domainSchedule.join(", ")}</p>
+              </div>
               <Link to="#" class="text-indigo-500 inline-flex items-center">
                 Learn More
                 <svg
@@ -474,13 +135,7 @@ function HomePage() {
                 Weapon Material Today
               </h2>
               <p class="leading-relaxed text-base mb-4">
-              <div className="inline-flex">
-                {wrapImageWM1(weaponMaterial1Detail)}
-                {wrapImageWM2(weaponMaterial2Detail)}
-                {wrapImageWM3(weaponMaterial3Detail)}
-                </div>
-                <br />
-                {weaponMaterialSchedule.join(", ")}
+                {materialSchedule.join(", ")}
               </p>
               <Link to="#" class="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -502,13 +157,7 @@ function HomePage() {
                 Talent Material Domain Today
               </h2>
               <p class="leading-relaxed text-base mb-4">
-                {domainSchedule[0]}
-                <br />
-                {domainSchedule[4]}
-                <br />
-                {domainSchedule[8]}
-                <br />
-                {domainSchedule[12]}
+                {domainSchedule.join(", ")}
               </p>
               <Link to="#" class="text-indigo-500 inline-flex items-center">
                 Learn More
