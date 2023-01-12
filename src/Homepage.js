@@ -6,7 +6,7 @@ import Sticker3 from "./img/sticker_3.png";
 function HomePage() {
   const [materialSchedule, setMaterialSchedule] = useState([]);
   const [domainSchedule, setDomainSchedule] = useState([]);
-  // const [talentToday, setTalentToday] = useState(new Map())
+  const [talentToday, setTalentToday] = useState([])
 
   console.log(materialSchedule);
   console.log(domainSchedule);
@@ -32,6 +32,7 @@ function HomePage() {
       genshindb.materials(getToday, { matchCategories: true })
     );
     setDomainSchedule(genshindb.domains(getToday, { matchCategories: true }));
+    setTalentToday(genshindb.materials('talent material', { matchCategories: true, verboseCategories: true }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,11 +42,11 @@ function HomePage() {
   // };
 
   // WrapTalentToday();
-  // console.log(talentToday);
-
-  // console.log(genshindb.materials('talent material', { matchCategories: true, verboseCategories: true }).filter());
-  // console.log(genshindb.materials(materialSchedule[12], {matchNames: true}));
-  // console.log(genshindb.materials(getToday, { matchCategories: true }).filter(materialSchedule.materialtype === 'Talent Level-Up Material'));
+  console.log(talentToday);
+  // console.log(genshindb.materials('ballad'));
+// console.log(genshindb.materials('talent material', { matchCategories: true, verboseCategories: true }));
+// .filter(ele => ele.daysofweek === `${getToday}`).map(ele => ele.name));
+  // console.log(genshindb.materials(materialSchedule.forEach(value => console.log(value)), { matchCategories: true }).materialtype('Talent Level-Up Material'));
 
   return (
     <>
@@ -102,7 +103,15 @@ function HomePage() {
                 Talent Material Today
               </h2>
               <p className="leading-relaxed text-base mb-4">
-{/* {Object.keys(materialSchedule).filter()} */}
+{talentToday.map((value) => {
+  return (
+    <>
+      <img className="w-20 h-20 ml-2" src={value.images.fandom} alt='hero'/>
+      {value.name}
+      {value.daysofweek}
+    </>
+  )
+})}
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
