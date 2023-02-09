@@ -4,16 +4,10 @@ import Sticker3 from "./img/sticker_3.png";
 // import TalentSchedule from "./API/TalentSchedule";
 
 function HomePage() {
-  const [materialSchedule, setMaterialSchedule] = useState([]);
-  const [domainSchedule, setDomainSchedule] = useState([]);
-  const [talentToday, setTalentToday] = useState([])
-
-  console.log(materialSchedule);
-  console.log(domainSchedule);
+  const [talentToday, setTalentToday] = useState(null);
+  const [character, setCharacter] = useState(null);
 
   const genshindb = require("genshin-db");
-  // console.log(genshindb.characters('names', {matchNames: true}));
-  // console.log(genshindb.materials('sunday', {matchCategories: true}));
 
   const date = [
     "sunday",
@@ -28,25 +22,48 @@ function HomePage() {
   const getToday = date[new Date().getDay()];
 
   useEffect(() => {
-    setMaterialSchedule(
-      genshindb.materials(getToday, { matchCategories: true })
+    setTalentToday(
+      genshindb.materials(getToday, {
+        matchCategories: true,
+        verboseCategories: true,
+      })
     );
-    setDomainSchedule(genshindb.domains(getToday, { matchCategories: true }));
-    setTalentToday(genshindb.materials('talent material', { matchCategories: true, verboseCategories: true }));
+    setCharacter(
+      genshindb.characters("names", {
+        matchCategories: true,
+        verboseCategories: true,
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const wrapTalentToday = (materialSchedule) => {
-  //   for (let i=0;i<=materialSchedule.length;i++)
-  //   setTalentToday(genshindb.materials(materialSchedule[0]));
-  // };
-
-  // WrapTalentToday();
   console.log(talentToday);
-  // console.log(genshindb.materials('ballad'));
-// console.log(genshindb.materials('talent material', { matchCategories: true, verboseCategories: true }));
-// .filter(ele => ele.daysofweek === `${getToday}`).map(ele => ele.name));
-  // console.log(genshindb.materials(materialSchedule.forEach(value => console.log(value)), { matchCategories: true }).materialtype('Talent Level-Up Material'));
+  console.log(character);
+
+  const wrapTalentToday = (talentToday) => {
+    if (talentToday === null) {
+      return null;
+    }
+    return (
+      <>
+      {/* <div className="inline-grid grid-flow-col"> */}
+        {talentToday.map((value) => {
+                            if (value.materialtype === "Talent Level-Up Material" && value.rarity === '4') {
+          return (
+            <>
+              {/* <div className="text-sm">{value.name}</div> */}
+              <img
+                src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                alt="talent-img"
+                className="h-10 w-10"
+              />
+            </>
+          );
+        }})}
+        {/* </div> */}
+      </>
+    );
+  };
 
   return (
     <>
@@ -103,15 +120,21 @@ function HomePage() {
                 Talent Material Today
               </h2>
               <p className="leading-relaxed text-base mb-4">
-{talentToday.map((value) => {
-  return (
-    <>
-      <img className="w-20 h-20 ml-2" src={value.images.fandom} alt='hero'/>
-      {value.name}
-      {value.daysofweek}
-    </>
-  )
-})}
+                {/* {talentToday.map((value) => {
+                  // if (value.materialtype === "Talent Level-Up Material") {
+                    return (
+                      <>
+                        <div className="text-sm">{value.name}</div>
+                        <img
+                          src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                          alt="talent-img"
+                          className="h-20 w-20"
+                        />
+                      </>
+                    );
+                  // } return null;
+                })} */}
+                {wrapTalentToday(talentToday)}
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -133,7 +156,20 @@ function HomePage() {
                 Weapon Material Today
               </h2>
               <div classNameName="leading-relaxed text-base mb-4">
-                <p>{domainSchedule.join(", ")}</p>
+                {/* {talentToday.map((value) => {
+                  if (value.materialtype === "Weapon Ascension Material") {
+                    return (
+                      <>
+                        <div className="text-sm">{value.name}</div>
+                        <img
+                          src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                          alt="talent-img"
+                          className="h-20 w-20"
+                        />
+                      </>
+                    );
+                  } return null;
+                })} */}
               </div>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -154,9 +190,7 @@ function HomePage() {
               <h2 className="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">
                 Weapon Material Today
               </h2>
-              <p className="leading-relaxed text-base mb-4">
-                {materialSchedule.join(", ")}
-              </p>
+              <p className="leading-relaxed text-base mb-4"></p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
                 <svg
@@ -177,7 +211,7 @@ function HomePage() {
                 Talent Material Domain Today
               </h2>
               <p className="leading-relaxed text-base mb-4">
-                {domainSchedule.join(", ")}
+                {/* {domainSchedule.join(", ")} */}
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
