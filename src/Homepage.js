@@ -5,6 +5,7 @@ import Sticker3 from "./img/sticker_3.png";
 
 function HomePage() {
   const [talentToday, setTalentToday] = useState(null);
+  const [weaponMaterialToday, setWeaponMaterialToday] = useState(null);
   const [character, setCharacter] = useState(null);
 
   const genshindb = require("genshin-db");
@@ -26,7 +27,12 @@ function HomePage() {
       genshindb.materials(getToday, {
         matchCategories: true,
         verboseCategories: true,
-      })
+      }).filter((value) => value.materialtype === "Character Talent Material" && value.rarity === '4')
+    );
+    setWeaponMaterialToday(genshindb.materials(getToday, {
+      matchCategories: true,
+      verboseCategories: true,
+    }).filter((value) => value.materialtype === "Weapon Ascension Material" && value.rarity === '4')
     );
     setCharacter(
       genshindb.characters("names", {
@@ -38,32 +44,8 @@ function HomePage() {
   }, []);
 
   console.log(talentToday);
+  console.log(weaponMaterialToday);
   console.log(character);
-
-  const wrapTalentToday = (talentToday) => {
-    if (talentToday === null) {
-      return null;
-    }
-    return (
-      <>
-      {/* <div className="inline-grid grid-flow-col"> */}
-        {talentToday.map((value) => {
-                            if (value.materialtype === "Talent Level-Up Material" && value.rarity === '4') {
-          return (
-            <>
-              {/* <div className="text-sm">{value.name}</div> */}
-              <img
-                src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
-                alt="talent-img"
-                className="h-10 w-10"
-              />
-            </>
-          );
-        }})}
-        {/* </div> */}
-      </>
-    );
-  };
 
   return (
     <>
@@ -120,21 +102,19 @@ function HomePage() {
                 Talent Material Today
               </h2>
               <p className="leading-relaxed text-base mb-4">
-                {/* {talentToday.map((value) => {
-                  // if (value.materialtype === "Talent Level-Up Material") {
-                    return (
-                      <>
-                        <div className="text-sm">{value.name}</div>
-                        <img
-                          src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
-                          alt="talent-img"
-                          className="h-20 w-20"
-                        />
-                      </>
-                    );
-                  // } return null;
-                })} */}
-                {wrapTalentToday(talentToday)}
+              {talentToday.map((value) => {
+            return (
+              <>
+                <div className="text-sm">{value.name}</div>
+                <img
+                  src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                  alt="talent-img"
+                  className="h-10 w-10"
+                />
+              </>
+            );
+        })}
+
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -156,20 +136,18 @@ function HomePage() {
                 Weapon Material Today
               </h2>
               <div classNameName="leading-relaxed text-base mb-4">
-                {/* {talentToday.map((value) => {
-                  if (value.materialtype === "Weapon Ascension Material") {
+                {weaponMaterialToday.map((value) => {
                     return (
                       <>
                         <div className="text-sm">{value.name}</div>
                         <img
                           src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
                           alt="talent-img"
-                          className="h-20 w-20"
-                        />
+                          className="h-10 w-10"
+                          />
                       </>
                     );
-                  } return null;
-                })} */}
+                })}
               </div>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
