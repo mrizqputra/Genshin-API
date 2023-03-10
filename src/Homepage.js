@@ -6,7 +6,6 @@ import Sticker3 from "./img/sticker_3.png";
 function HomePage() {
   const [talentToday, setTalentToday] = useState(null);
   const [weaponMaterialToday, setWeaponMaterialToday] = useState(null);
-  const [character, setCharacter] = useState(null);
 
   const genshindb = require("genshin-db");
 
@@ -24,28 +23,37 @@ function HomePage() {
 
   useEffect(() => {
     setTalentToday(
-      genshindb.materials(getToday, {
-        matchCategories: true,
-        verboseCategories: true,
-      }).filter((value) => value.materialtype === "Character Talent Material" && value.rarity === '4')
+      genshindb
+        .materials(getToday, {
+          matchCategories: true,
+          verboseCategories: true,
+        })
+        .filter(
+          (value) =>
+            value.materialtype === "Character Talent Material" &&
+            value.rarity === "4"
+        )
     );
-    setWeaponMaterialToday(genshindb.materials(getToday, {
-      matchCategories: true,
-      verboseCategories: true,
-    }).filter((value) => value.materialtype === "Weapon Ascension Material" && value.rarity === '4')
+    setWeaponMaterialToday(
+      genshindb
+        .materials(getToday, {
+          matchCategories: true,
+          verboseCategories: true,
+        })
+        .filter(
+          (value) =>
+            value.materialtype === "Weapon Ascension Material" &&
+            value.rarity === "4"
+        )
     );
-    setCharacter(
-      genshindb.characters("names", {
-        matchCategories: true,
-        verboseCategories: true,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [genshindb, getToday]);
 
   console.log(talentToday);
   console.log(weaponMaterialToday);
-  console.log(character);
+
+  if (talentToday === null && weaponMaterialToday === null) {
+    return null;
+  }
 
   return (
     <>
@@ -102,19 +110,18 @@ function HomePage() {
                 Talent Material Today
               </h2>
               <p className="leading-relaxed text-base mb-4">
-              {talentToday.map((value) => {
-            return (
-              <>
-                <div className="text-sm">{value.name}</div>
-                <img
-                  src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
-                  alt="talent-img"
-                  className="h-10 w-10"
-                />
-              </>
-            );
-        })}
-
+                {talentToday.map((value) => {
+                  return (
+                    <>
+                      <div className="text-sm">{value.name}</div>
+                      <img
+                        src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                        alt={value.name}
+                        className="h-10 w-10"
+                      />
+                    </>
+                  );
+                })}
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
@@ -137,16 +144,16 @@ function HomePage() {
               </h2>
               <div classNameName="leading-relaxed text-base mb-4">
                 {weaponMaterialToday.map((value) => {
-                    return (
-                      <>
-                        <div className="text-sm">{value.name}</div>
-                        <img
-                          src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
-                          alt="talent-img"
-                          className="h-10 w-10"
-                          />
-                      </>
-                    );
+                  return (
+                    <>
+                      <div className="text-sm">{value.name}</div>
+                      <img
+                        src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                        alt={value.name}
+                        className="h-10 w-10"
+                      />
+                    </>
+                  );
                 })}
               </div>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
@@ -166,9 +173,22 @@ function HomePage() {
             </div>
             <div className="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
               <h2 className="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">
-                Weapon Material Today
+                Open Domain for Talent Material
               </h2>
-              <p className="leading-relaxed text-base mb-4"></p>
+              <p className="leading-relaxed text-base mb-4">
+                {talentToday.map((value) => {
+                  return (
+                    <>
+                      <div className="text-sm">{value.dropdomain}</div>
+                      <img
+                        src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                        alt={value.name}
+                        className="h-10 w-10"
+                      />
+                    </>
+                  );
+                })}
+              </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More
                 <svg
@@ -186,10 +206,21 @@ function HomePage() {
             </div>
             <div className="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
               <h2 className="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">
-                Talent Material Domain Today
+                Open Domain for Weapon Ascension Material
               </h2>
               <p className="leading-relaxed text-base mb-4">
-                {/* {domainSchedule.join(", ")} */}
+                {weaponMaterialToday.map((value) => {
+                  return (
+                    <>
+                      <div className="text-sm">{value.dropdomain}</div>
+                      <img
+                        src={`https://api.ambr.top/assets/UI/${value.images.nameicon}.png`}
+                        alt={value.name}
+                        className="h-10 w-10"
+                      />
+                    </>
+                  );
+                })}
               </p>
               <Link to="#" className="text-indigo-500 inline-flex items-center">
                 Learn More

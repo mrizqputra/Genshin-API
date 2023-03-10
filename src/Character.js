@@ -1,144 +1,56 @@
 import { React, useState, useEffect } from "react";
-import axios from "axios";
 import Sticker5 from "./img/sticker_5.png";
 
 function CharactersPage() {
   const [charactersList, setCharactersList] = useState([]);
 
+  const genshindb = require("genshin-db");
+
   useEffect(() => {
     // function to get all characters
-    axios({
-      method: "GET",
-      url: `https://genshin-db-api.vercel.app/api/characters`,
-      params: {
-        query: "names",
-        // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-        // matchNames: false, // Allows the matching of names.
-        // matchAltNames: true, // Allows the matching of alternate or custom names.
-        // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-        matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-        // verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-        // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-        resultLanguage: "English", // Output language that you want your results to be in.
-      },
-      headers: {},
-    })
-      .then(function (response) {
-        console.log(response);
-        setCharactersList(response.data);
+    setCharactersList(
+      genshindb.characters('names', {
+        matchCategories: true,
       })
-      .catch(function (err) {
-        console.log(err);
-      });
+    )
   }, []);
 
   const getAllCharacters = () => {
     // function to get all characters
-    axios({
-      method: "GET",
-      url: `https://genshin-db-api.vercel.app/api/characters`,
-      params: {
-        query: "names",
-        // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-        // matchNames: false, // Allows the matching of names.
-        // matchAltNames: true, // Allows the matching of alternate or custom names.
-        // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-        matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-        // verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-        // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-        resultLanguage: "English", // Output language that you want your results to be in.
-      },
-      headers: {},
-    })
-      .then(function (response) {
-        console.log(response);
-        setCharactersList(response.data);
+    setCharactersList(
+      genshindb.characters('names', {
+        matchCategories: true,
       })
-      .catch(function (err) {
-        console.log(err);
-      });
+    );
   };
 
   const get5StarCharacters = () => {
     // function to get all characters
-    axios({
-      method: "GET",
-      url: `https://genshin-db-api.vercel.app/api/characters`,
-      params: {
-        query: "5",
-        // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-        // matchNames: false, // Allows the matching of names.
-        // matchAltNames: true, // Allows the matching of alternate or custom names.
-        // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-        matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-        // verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-        // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-        resultLanguage: "English", // Output language that you want your results to be in.
-      },
-      headers: {},
-    })
-      .then(function (response) {
-        console.log(response);
-        setCharactersList(response.data);
+    setCharactersList(
+      genshindb.characters('5', {
+        matchCategories: true,
       })
-      .catch(function (err) {
-        console.log(err);
-      });
+    );
   };
 
   const get4StarCharacters = () => {
     // function to get all characters
-    axios({
-      method: "GET",
-      url: `https://genshin-db-api.vercel.app/api/characters`,
-      params: {
-        query: "4",
-        // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-        // matchNames: false, // Allows the matching of names.
-        // matchAltNames: true, // Allows the matching of alternate or custom names.
-        // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-        matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-        // verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-        // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-        resultLanguage: "English", // Output language that you want your results to be in.
-      },
-      headers: {},
-    })
-      .then(function (response) {
-        console.log(response);
-        setCharactersList(response.data);
+    setCharactersList(
+      genshindb.characters('4', {
+        matchCategories: true,
       })
-      .catch(function (err) {
-        console.log(err);
-      });
+    )
   };
 
   const [characterDetail, setCharacterDetail] = useState(null);
 
   const getCharacterDetail = (value) => {
-    axios({
-      method: "GET",
-      url: `https://genshin-db-api.vercel.app/api/characters`,
-      params: {
-        query: value,
-        // dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
-        // matchNames: false, // Allows the matching of names.
-        matchAltNames: false, // Allows the matching of alternate or custom names.
-        // matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-        // matchCategories: true, // Allows the matching of categories. If true, then returns an array if it matches.
-        // verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-        // queryLanguages: ["English"], // Array of languages that your query will be searched in.
-        resultLanguage: "English", // Output language that you want your results to be in.
-      },
-      headers: {},
-    })
-      .then(function (response) {
-        console.log(response.data);
-        setCharacterDetail(response.data);
+    setCharacterDetail(
+      genshindb.characters(value, {
+        matchCategories: true,
+        verboseCategories: true,
       })
-      .catch(function (err) {
-        console.log(err);
-      });
+    )
   };
 
   const CharDetail = (characterDetail) => {
@@ -385,20 +297,19 @@ function CharactersPage() {
             </div>
             {charactersList.map((value) => {
               return (
-                // <div className="columns-1 text-center">
                 <button
                   onClick={() => getCharacterDetail(value)}
                   className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900"
                 >
                   {value}
                 </button>
-                // </div>
               );
             })}
           </div>
           <div className="md:w-3/4">{CharDetail(characterDetail)}</div>
         </div>
       </div>
+      
     </>
   );
 }
