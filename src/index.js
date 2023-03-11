@@ -6,6 +6,7 @@ import Homepage from './Homepage';
 import WeaponsPage from './Weapon';
 import ArtifactsPage from './Artifact';
 import CharactersPage from './Character';
+import Charactercard from './component/CharacterCard';
 import MaterialsPage from './Material';
 import Footer from './component/Footer';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/characters",
+        element: <><Charactercard/></>  
+      },
+      {
+        path: "/characters/:id",
         element: <><CharactersPage/></>  
       },
       {
